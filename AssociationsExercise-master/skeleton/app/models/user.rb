@@ -8,7 +8,5 @@ class User < ActiveRecord::Base
     :through => :enrollments,
     :source => :courses
 
-  def enrolled_courses
-    self.courses
-  end
+    alias_method :enrolled_courses, :courses
 end

@@ -8,19 +8,17 @@ class Course < ActiveRecord::Base
     :through => :enrollments,
     :source => :users
 
-  has_one :prerequisite,
-    :foreign_key => :id,
-    :primary_key => :prereq_id,
+  belongs_to :prerequisite,
+    :foreign_key => :prereq_id,
+    :primary_key => :id,
     :class_name => 'Course'
 
-  has_one :instructor,
-    :foreign_key => :id,
-    :primary_key => :instructor_id,
+  belongs_to :instructor,
+    :foreign_key => :instructor_id,
+    :primary_key => :id,
     :class_name => 'User'
 
-  def enrolled_students
-    self.users
-  end
+  alias_method :enrolled_users, :users
 
 
 end
