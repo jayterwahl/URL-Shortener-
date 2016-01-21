@@ -22,8 +22,13 @@ class User < ActiveRecord::Base
     :primary_key => :id
 
   has_many :visited_urls,
+    Proc.new { distinct },
     :through => :visits,
     :source => :shortened_url
 
+
+  def self.create_user(email)
+    User.create(:email => email)
+  end
 
 end

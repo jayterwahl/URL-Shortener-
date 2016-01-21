@@ -5,9 +5,14 @@
 #  id               :integer          not null, primary key
 #  shortened_url_id :integer          not null
 #  user_id          :integer          not null
+#  created_at       :datetime
+#  updated_at       :datetime
 #
 
 class Visit < ActiveRecord::Base
+  validates :user_id, :presence => true
+  validates :shortened_url_id, :presence => true
+
   belongs_to :shortened_url,
     :foreign_key => :shortened_url_id,
     :primary_key => :id,
@@ -19,9 +24,6 @@ class Visit < ActiveRecord::Base
     :class_name => 'User'
 
   def self.record_visit!(user, shortened_url)
-    visit = Visit.new(:shortened_url_id => shortened_url.id,
-    :user_id => user.id)
-    visit.save
-
+    Visit.create(:shortened_url_id => shortened_url.id, :user_id => user.id)
   end
 end
